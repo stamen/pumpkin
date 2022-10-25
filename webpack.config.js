@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, './'),
+    path: path.resolve(__dirname, './dist'),
   },
   mode: 'development',
   resolve: {fallback: {"util": require.resolve("util/"), "buffer": require.resolve("buffer")}},
@@ -21,7 +21,7 @@ module.exports = {
   ],
   devServer: {
     static: {
-      directory: path.join(__dirname, './'),
+      directory: path.join(__dirname, './dist'),
     },
     compress: true,
     port: 3000,
