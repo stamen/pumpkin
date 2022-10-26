@@ -64,9 +64,9 @@ const draw = new MapboxDraw({
 map.addControl(draw, "top-right");
 
 map.on("load", () => {
-  const drawingString = window.decodeURIComponent(url.searchParams.get("carving"));
+  const drawingString = url.searchParams.get("carving");
   if (drawingString) {
-    const geom = Geometry.parseTwkb(Buffer.from(drawingString, "base64"));
+    const geom = Geometry.parseTwkb(Buffer.from(window.decodeURIComponent(drawingString), "base64"));
     draw.set(flatten(geom.toGeoJSON()));
   }
 });
