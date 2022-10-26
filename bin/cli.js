@@ -19,13 +19,19 @@ rl.on('line', (line) => {
     features = features.features
   }
   features.forEach(feature => {
-    allParts.push(feature.geometry.coordinates.map((part) => {
-      return part.map((c) => {
-        return c.map((i) => {
-          return Math.round(i * 1000) / 1000;
+    let parts = feature.geometry.coordinates
+    if (feature.geometry.type == "Polygon") {
+      parts = [parts]
+    }
+    parts.forEach(part => {
+      allParts.push(part.map((s) => {
+        return s.map((c) => {
+          return c.map((i) => {
+            return Math.round(i * 1000) / 1000;
+          });
         });
-      });
-    }));
+      }));
+    })
   });
 });
 
