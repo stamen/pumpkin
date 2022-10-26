@@ -64,17 +64,17 @@ const draw = new MapboxDraw({
 map.addControl(draw, "top-right");
 
 map.on("load", () => {
-  const constellationString = url.searchParams.get("carving");
-  if (constellationString) {
-    const geom = Geometry.parseTwkb(Buffer.from(constellationString, "hex"));
+  const drawingString = window.decodeURIComponent(url.searchParams.get("carving"));
+  if (drawingString) {
+    const geom = Geometry.parseTwkb(Buffer.from(drawingString, "base64"));
     draw.set(flatten(geom.toGeoJSON()));
   }
 });
 
-const updateConstellation = (i) => {
+const updateDrawing = (i) => {
   const features = draw.getAll().features;
   if (features.length) {
-    const constellation = {
+    const drawing = {
       type: "MultiPolygon",
       coordinates: features.map((f) => {
         return f.geometry.coordinates.map((part) => {
@@ -89,7 +89,7 @@ const updateConstellation = (i) => {
 
     url.searchParams.set(
       "carving",
-      Geometry.parseGeoJSON(constellation).toTwkb().toString("hex")
+      window.encodeURIComponent(Geometry.parseGeoJSON(drawing).toTwkb().toString("base64"))
     );
     window.history.pushState(null, "", url.toString());
   } else {
@@ -98,6 +98,6 @@ const updateConstellation = (i) => {
   }
 };
 
-map.on("draw.create", updateConstellation);
-map.on("draw.update", updateConstellation);
-map.on("draw.delete", updateConstellation);
+map.on("draw.create", updateDrawing);
+map.on("draw.update", updateDrawing);
+map.on("draw.delete", updateDrawing);
