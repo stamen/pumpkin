@@ -35,6 +35,6 @@ jobs:
           # The branch the action should deploy to.
           BRANCH: gh-pages
           # The folder the action should deploy.
-          FOLDER: .
+          FOLDER: dist
           # Automatically remove deleted files from the deploy branch
           CLEAN: true
