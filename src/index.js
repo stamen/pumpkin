@@ -71,9 +71,8 @@ map.on("load", () => {
   }
 });
 
-const updateConstellation = () => {
+const updateConstellation = (i) => {
   const features = draw.getAll().features;
-  console.log("U")
   if (features.length) {
     const constellation = {
       type: "MultiPolygon",
@@ -87,9 +86,6 @@ const updateConstellation = () => {
         });
       }),
     };
-    const cString = Geometry.parseGeoJSON(constellation)
-      .toWkb()
-      .toString("hex");
 
     url.searchParams.set(
       "carving",
